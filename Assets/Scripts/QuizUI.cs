@@ -7,21 +7,27 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class QuizUI : MonoBehaviour
-{
-    [SerializeField] private GameManager gameManager;
-    [SerializeField] private TextMeshProUGUI questionText;
-    [SerializeField] private Image questionImage;
-    [SerializeField] private List<Image> answersImage;
-    [SerializeField] private List<Button> options;
+{   
+    [Header("Game Scene")]
+    [SerializeField] public List<Image> answersImage;
+    [SerializeField] public List<Button> options;
     [SerializeField] public List<GameObject> panel;
     [SerializeField] private TextMeshProUGUI questionNumberText;
+    [SerializeField] private GameManager gameManager;
+
+    [Header("Data")]
+    [SerializeField] private TextMeshProUGUI questionText;
+    [SerializeField] private Image questionImage;
+    
+    
     private string currentQuestionNumber;
     private int questionNumber = 1;
-    private QuestionsData questions;
+    private Questions questions;
     private bool answered;
+    
     void Start()
     {
-        
+
     }
 
     void Update()
@@ -36,7 +42,7 @@ public class QuizUI : MonoBehaviour
         }
     }
 
-    public void SetQuestion(QuestionsData questions)
+    public void SetQuestion(Questions questions)
     {
         RemoveImage();
 
@@ -76,7 +82,9 @@ public class QuizUI : MonoBehaviour
             case AnswersType.IMAGE:
                 for (int i=0 ; i<options.Count ; i++){
                     options[i].GetComponentInChildren<TextMeshProUGUI>().text = null;
-                    options[i].GetComponentInChildren<Image>().sprite = answerListImage[i];
+                    // options[i].GetComponentInChildren<Image>().sprite = answerListImage[i];
+                    answersImage[i].transform.gameObject.SetActive(true);
+                    answersImage[i].sprite = answerListImage[i];
                     options[i].name = answerList[i];
                 }
 
@@ -116,6 +124,7 @@ public class QuizUI : MonoBehaviour
     {
         for (int i=0 ; i<options.Count ; i++){
             options[i].GetComponentInChildren<Image>().sprite = null;
+            answersImage[i].transform.gameObject.SetActive(false);
         }
     }
 
