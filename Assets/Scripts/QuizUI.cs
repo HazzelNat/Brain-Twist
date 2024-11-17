@@ -24,7 +24,7 @@ public class QuizUI : MonoBehaviour
     private int questionNumber = 1;
     private Questions questions;
     private bool answered;
-    
+
     void Start()
     {
 
@@ -54,11 +54,13 @@ public class QuizUI : MonoBehaviour
         switch(questions.questionType)
         {
             case QuestionType.TEXT:
+                questionText.transform.gameObject.SetActive(true);
                 questionImage.transform.gameObject.SetActive(false);
                 questionText.text = questions.questionInfo;
 
                 break;
             case QuestionType.IMAGE:
+                questionText.transform.gameObject.SetActive(false);
                 questionImage.transform.gameObject.SetActive(true);
                 questionImage.sprite = questions.questionImage;
 
