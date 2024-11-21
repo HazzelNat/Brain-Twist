@@ -20,6 +20,9 @@ public class QuizUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI questionText;
     [SerializeField] private Image questionImage;
     
+    AudioManager audioManager;
+
+    
     
     private string currentQuestionNumber;
     private int questionNumber = 1;
@@ -41,6 +44,8 @@ public class QuizUI : MonoBehaviour
             Button localButton = options[i];
             localButton.onClick.AddListener(() => OnClick(localButton));
         }
+
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     public void SetQuestion(QuestionsData questions)
@@ -110,10 +115,12 @@ public class QuizUI : MonoBehaviour
                 panel[0].SetActive(true);                       // Activate WinPanel
                 Invoke("RemovePanel", 2f);
                 timer.StopTimer();
+                audioManager.PlaySFX(audioManager.correct);
             } else {
                 panel[1].SetActive(true);                       // Activate LosePanel
                 Invoke("RemovePanel", 2f);
                 timer.StopTimer();
+                audioManager.PlaySFX(audioManager.wrong);
             }
             Invoke("IncrementQuestion", 2f);
         }

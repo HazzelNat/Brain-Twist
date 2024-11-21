@@ -6,7 +6,11 @@ using UnityEngine.SceneManagement;
 
 public class ButtonChangeScene : MonoBehaviour
 {
+
     public void ChangeScene(String sceneName){
         SceneManager.LoadScene(sceneName);
     }
+
+
+
 }
