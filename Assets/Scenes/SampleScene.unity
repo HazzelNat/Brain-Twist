@@ -339,7 +339,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 0
+  Priority: 128
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -1602,7 +1602,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 17.558}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 90.40015, y: -15}
+  m_AnchoredPosition: {x: 90.40039, y: -15}
   m_SizeDelta: {x: 238.768, y: 176.978}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1066049651
@@ -3409,7 +3409,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeText: {fileID: 485899545}
   slider: {fileID: 1074793051}
-  timeLimit: 30
+  timeLimit: 5
+  time: 0
 --- !u!114 &2122977657
 MonoBehaviour:
   m_ObjectHideFlags: 0

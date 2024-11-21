@@ -36,8 +36,10 @@ public class QuizUI : MonoBehaviour
 
     void Update()
     {
-        
+
     }
+
+
 
     private void Awake() {
         for(int i=0 ; i<options.Count ; i++){
@@ -46,6 +48,10 @@ public class QuizUI : MonoBehaviour
         }
 
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+
+        if (timer != null) {
+        timer.OnTimerEnded += HandleTimerEnd;
+        }
     }
 
     public void SetQuestion(QuestionsData questions)
@@ -121,10 +127,12 @@ public class QuizUI : MonoBehaviour
                 Invoke("RemovePanel", 2f);
                 timer.StopTimer();
                 audioManager.PlaySFX(audioManager.wrong);
-            }
+            } 
+
             Invoke("IncrementQuestion", 2f);
         }
     }
+    
 
     private void RemovePanel()
     {
@@ -145,4 +153,23 @@ public class QuizUI : MonoBehaviour
         currentQuestionNumber = $"Q{questionNumber}";
         questionNumberText.text = currentQuestionNumber;
     }
+
+    private void HandleTimerEnd() {
+    if (!answered)
+    {
+        answered = true;
+        panel[1].SetActive(true);
+        audioManager.PlaySFX(audioManager.wrong);
+
+        Invoke("LoadNextQuestion", 2f);
+        }
+    }
+
+    private void LoadNextQuestion() {
+        RemovePanel();
+        IncrementQuestion();
+        gameManager.SelectQuestion();
+    }
+
+
 }

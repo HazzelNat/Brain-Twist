@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
         
     }
 
-    void SelectQuestion()
+    public void SelectQuestion()
     {
         int questionIndex = Random.Range(0, questions.Count); 
 
