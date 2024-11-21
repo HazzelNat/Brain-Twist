@@ -14,6 +14,7 @@ public class QuizUI : MonoBehaviour
     [SerializeField] public List<GameObject> panel;
     [SerializeField] private TextMeshProUGUI questionNumberText;
     [SerializeField] private GameManager gameManager;
+    [SerializeField] private Timer timer;
 
     [Header("Data")]
     [SerializeField] private TextMeshProUGUI questionText;
@@ -22,7 +23,7 @@ public class QuizUI : MonoBehaviour
     
     private string currentQuestionNumber;
     private int questionNumber = 1;
-    private Questions questions;
+    private QuestionsData questions;
     private bool answered;
 
     void Start()
@@ -42,7 +43,7 @@ public class QuizUI : MonoBehaviour
         }
     }
 
-    public void SetQuestion(Questions questions)
+    public void SetQuestion(QuestionsData questions)
     {
         RemoveImage();
 
@@ -108,9 +109,11 @@ public class QuizUI : MonoBehaviour
             if(correct){
                 panel[0].SetActive(true);                       // Activate WinPanel
                 Invoke("RemovePanel", 2f);
+                timer.StopTimer();
             } else {
                 panel[1].SetActive(true);                       // Activate LosePanel
                 Invoke("RemovePanel", 2f);
+                timer.StopTimer();
             }
             Invoke("IncrementQuestion", 2f);
         }

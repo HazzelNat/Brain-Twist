@@ -10,8 +10,9 @@ using UnityEngine.UIElements;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private QuizUI quizUI;
-    [SerializeField] private List<Questions> questions;
-    [SerializeField] private Questions selectedQuestion;
+    [SerializeField] private List<QuestionsData> questions;
+    [SerializeField] private QuestionsData selectedQuestion;
+    [SerializeField] private Timer timer;
     private List<int> doneQuestion = new List<int>();
     private Scene sceneName;
     void Start()
@@ -34,6 +35,7 @@ public class GameManager : MonoBehaviour
             selectedQuestion = questions[questionIndex];
 
             quizUI.SetQuestion(selectedQuestion);
+            timer.ResetTimer();
         } else {
             if(doneQuestion.Count == questions.Count){
                 FinishGame();
