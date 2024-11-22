@@ -28,10 +28,12 @@ public class QuizUI : MonoBehaviour
     private int questionNumber = 1;
     private QuestionsData questions;
     private bool answered;
+    ScoreManager scoreManager;
+    
 
     void Start()
     {
-
+        scoreManager = gameManager.GetComponent<ScoreManager>();
     }
 
     void Update()
@@ -50,8 +52,10 @@ public class QuizUI : MonoBehaviour
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
 
         if (timer != null) {
-        timer.OnTimerEnded += HandleTimerEnd;
+            timer.OnTimerEnded += HandleTimerEnd;
         }
+
+        
     }
 
     public void SetQuestion(QuestionsData questions)
@@ -96,7 +100,7 @@ public class QuizUI : MonoBehaviour
             case AnswersType.IMAGE:
                 for (int i=0 ; i<options.Count ; i++){
                     options[i].GetComponentInChildren<TextMeshProUGUI>().text = null;
-                    // options[i].GetComponentInChildren<Image>().sprite = answerListImage[i];
+
                     answersImage[i].transform.gameObject.SetActive(true);
                     answersImage[i].sprite = answerListImage[i];
                     options[i].name = answerList[i];
@@ -119,15 +123,23 @@ public class QuizUI : MonoBehaviour
 
             if(correct){
                 panel[0].SetActive(true);                       // Activate WinPanel
-                Invoke("RemovePanel", 2f);
+                Invoke("RemovePanel", 1.5f);
+
+                scoreManager.UpdateScore(true, timer.time);
                 timer.StopTimer();
+
                 audioManager.PlaySFX(audioManager.correct);
+                
             } else {
                 panel[1].SetActive(true);                       // Activate LosePanel
-                Invoke("RemovePanel", 2f);
+                Invoke("RemovePanel", 1.5f);
+
+                scoreManager.UpdateScore(false, timer.time);
+                
                 timer.StopTimer();
+
                 audioManager.PlaySFX(audioManager.wrong);
-            } 
+            }
 
             Invoke("IncrementQuestion", 2f);
         }
@@ -143,7 +155,7 @@ public class QuizUI : MonoBehaviour
     private void RemoveImage()
     {
         for (int i=0 ; i<options.Count ; i++){
-            options[i].GetComponentInChildren<Image>().sprite = null;
+            answersImage[i].sprite = null;
             answersImage[i].transform.gameObject.SetActive(false);
         }
     }

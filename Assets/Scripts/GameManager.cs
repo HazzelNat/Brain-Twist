@@ -13,11 +13,17 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<QuestionsData> questions;
     [SerializeField] private QuestionsData selectedQuestion;
     [SerializeField] private Timer timer;
+    public bool isFinish = false;
+    ScoreManager scoreManager;
     private List<int> doneQuestion = new List<int>();
-    private Scene sceneName;
+
     void Start()
     {
-        SelectQuestion();
+        scoreManager = GetComponent<ScoreManager>();
+        
+        if(SceneManager.GetActiveScene().name != "MainMenu"){
+            SelectQuestion();
+        }
     }
 
     void Update()
@@ -60,6 +66,7 @@ public class GameManager : MonoBehaviour
 
     private void FinishGame()
     {
+        scoreManager.isFinish = true;
         ChangeScene("MainMenu");
     }
 
